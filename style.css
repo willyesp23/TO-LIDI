@@ -70,6 +70,7 @@ body {
   border-radius: 20px;
   margin-top: 2rem;
   box-shadow: 0 5px 15px rgba(206, 120, 187, 0.3);
+  animation: fadeIn 1s ease-out;
 }
 
 .bloque h2 {
@@ -82,6 +83,7 @@ body {
   margin: 0 auto;
   margin-top: 2rem;
   color: #fff;
+  animation: fadeIn 1s ease-out;
 }
 
 
@@ -320,3 +322,6 @@ a:focus {
   outline: none;
   box-shadow: none;
 }
+
+
+ @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
