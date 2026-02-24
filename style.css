@@ -325,3 +325,20 @@ a:focus {
 
 
  @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+
+ /*nueva seccion*/
+
+ .timeline {
+  padding: 40px;
+  text-align: center;
+}
+
+.evento {
+  background: #ffe6f0;
+  margin: 20px auto;
+  padding: 15px;
+  width: 60%;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  color: black;
+}
