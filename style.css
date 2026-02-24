@@ -30,7 +30,7 @@ body {
   background: #ffe6f0;
   margin: 20px auto;
   padding: 15px;
-  width: 80%;
+  width: 90%;
   border-radius: 15px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.1);
   color: black;
@@ -344,5 +344,6 @@ a:focus {
  @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
 
  
+
 
 
