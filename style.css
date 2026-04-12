@@ -26,6 +26,12 @@ body {
   text-align: center;
 }
 
+.timeline img{
+  width: 60%;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
 .evento {
   background: #ffe6f0;
   margin: 20px auto;
