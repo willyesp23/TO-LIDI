@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>L+W</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="heart-png.webp" type="image/x-icon">
+</head>
+
+<div class="fondo-petalos"></div>
+<script>
+  const fondo = document.querySelector('.fondo-petalos');
+  for (let i = 0; i < 25; i++) {
+    const span = document.createElement('span');
+    span.style.left = Math.random() * 100 + 'vw';
+    span.style.animationDuration = (5 + Math.random() * 5) + 's';
+    span.style.animationDelay = Math.random() * 5 + 's';
+    fondo.appendChild(span);
+  }
+</script>
+
+
+<body>
+  <section class="timeline" class="bloque">
+    <h2>Nuestra Historia 💞</h2>
+    <div class="carousel">
+      <div class="carousel-track">
+        <div class="evento">
+          <h3>🌱 Cuando empezó todo</h3>
+          <p>Nos conocimos en la secundaria.
+            Al principio me tocó el turno de la tarde, pero con un poco de suerte logré pasarme a la mañana.
+
+            Y como si las cosas ya estuvieran acomodándose solas, terminé en el mismo salón que tú.
+
+            Al inicio solo eras una compañera más… pero poco a poco empezaste a llamar mi atención. </p>
+          <img src="secu.jpg" alt="Imagen 1">
+        </div>
+
+        <div class="evento">
+          <h3>✨ El reencuentro ✨</h3>
+          <p>Hubo un día en el que, gracias al destino, coincidimos en el mismo lugar.
+            Sin saberlo, ese momento marcaría el inicio de algo hermoso entre nosotros.
+
+            Ese día me ignoraste… y después te sentiste mal.
+            Y aunque suene raro, gracias por eso.
+
+            Porque fue justo a partir de ahí que empezamos a hablar más, a conocernos de verdad, a descubrir poco a poco
+            todo lo que había detrás de nuestras miradas.
+
+            A veces las mejores historias empiezan de la forma más inesperada.</p>
+          <img src="gym ut.jpg" alt="Imagen 2">
+        </div>
+
+        <div class="evento">
+          <h3>Nuestra primera cita 🌸</h3>
+          <p>Después de pensarlo tanto, por fin me animé a invitarte a salir.
+            Con toda la pena del mundo… pero lo hice.
+
+            Cuando aceptaste, no tienes idea de lo emocionado que me puse.
+            Al mismo tiempo estaba feliz y nervioso, sin saber exactamente qué decir o cómo actuar.
+
+            Gracias a Dios no te espanté… o al menos no tanto 😝
+
+            Pero al final, ese día fue increíble.
+            Fue uno de esos momentos que confirmaron que todo lo que sentía valía completamente la pena.</p>
+          <img src="1ra cita.jpg" alt="Imagen 3">
+        </div>
+
+        <div class="evento">
+          <h3>El día que todo cambió… 💘</h3>
+          <p>Hubo un momento que marcó un antes y un después en nuestra historia.
+            Estuve planeándolo todo, pensando en cada detalle, esperando que fuera un recuerdo inolvidable para los dos.
+
+            Y llegó ese día…
+            10 de diciembre de 2025.
+
+            Sin exagerar, se convirtió en el mejor día de mi vida.
+            El día en que nuestra historia dejó de ser solo ilusión y se volvió oficial. ♥️</p>
+          <img src="nv.jpg" alt="Imagen 4">
+        </div>
+
+        <div class="evento">
+          <h3> Y nuestra historia continúa… 💞</h3>
+          <p>Y aunque ya hemos vivido momentos increíbles, sé que esto apenas comienza.
+
+            Cada risa, cada conversación, cada salida y cada recuerdo que estamos creando es solo el inicio de algo
+            mucho
+            más grande.
+
+            Nuestra historia no tiene un final escrito…
+            porque todos los días seguimos agregando un nuevo capítulo.
+
+            Y lo mejor de todo es que ahora lo escribimos juntos. ♥️✨</p>
+          <img src="lidi y yo.jpg" alt="Imagen 5">
+        </div>
+      </div>
+    </div>
+    <div class="dots"></div>
+  </section>
+
+  <section class="musica">
+    <iframe class="spotify" src="https://open.spotify.com/embed/track/6VsvKPJ4xjVNKpI8VVZ3SV?si=e732c1593dc34beb"
+      width="100%" height="80" frameborder="0"
+      allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
+    <p>And isn't it just so pretty to think</p>
+    <p>All along there was some</p>
+    <p>Invisible string</p>
+    <p><b>Tying you to me?</b></p>
+  </section>
+
+  <h2>TE AMO MI NIÑA PRECIOSA</h2>
+
+  <section class="final">
+    <button class="og"><a href="https://willyesp23.github.io/happy-birthday-lidi/">Pagina de tu cumpleaños</a></button>
+    <div class="cssload-main">
+  </section>
+</body>
+
+<script>
+const track = document.querySelector('.carousel-track');
+const eventos = document.querySelectorAll('.evento');
+const dotsContainer = document.querySelector('.dots');
+
+eventos.forEach((_, i) => {
+  const dot = document.createElement('span');
+  dot.classList.add('dot');
+  if (i === 0) dot.classList.add('active');
+  dotsContainer.appendChild(dot);
+});
+
+const dots = document.querySelectorAll('.dot');
+
+track.addEventListener('scroll', () => {
+  const index = Math.round(track.scrollLeft / track.clientWidth);
+  
+  dots.forEach(dot => dot.classList.remove('active'));
+  if (dots[index]) dots[index].classList.add('active');
+});
+</script>
+
+</html>
