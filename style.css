@@ -137,7 +137,7 @@ body {
 
 /* GIRO SUAVE */
 .spin {
-  animation: spin 6s linear infinite;
+  animation: spin 10s linear infinite;
 }
 @keyframes spin {
   from { transform: rotate(0); }
