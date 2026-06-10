@@ -592,3 +592,25 @@ button:focus, a:focus { outline: none; box-shadow: none; }
     transition-duration: 0.01ms !important;
   }
 }
+/* ==============================
+   YOUTUBE IFRAME (carta secreta)
+============================== */
+.yt-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  margin: 16px auto 0;
+  padding-top: 56.25%; /* ratio 16:9 */
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 6px 28px rgba(200, 100, 180, 0.45);
+}
+
+.yt-wrapper iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+  border-radius: 14px;
+}

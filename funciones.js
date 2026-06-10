@@ -294,21 +294,15 @@ function verificarClave() {
   if (input.value.trim().toLowerCase() === CLAVE_SECRETA.toLowerCase()) {
     msg.innerHTML = MENSAJE_SECRETO.trim().replace(/\n/g, '<br>') + `
       <br><br>
-      <video
-        id="videoNosotros"
-        src="nosotros.mp4"
-        controls
-        autoplay
-        playsinline
-        style="
-          display: block;
-          width: 100%;
-          max-width: 480px;
-          margin: 16px auto 0;
-          border-radius: 14px;
-          box-shadow: 0 6px 28px rgba(200, 100, 180, 0.45);
-        "
-      ></video>
+      <div class="yt-wrapper">
+        <iframe
+          src="https://www.youtube.com/embed/sCYcDT6m8ac?autoplay=1&rel=0&modestbranding=1"
+          title="Nuestro video"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+        ></iframe>
+      </div>
     `;
     msg.classList.add('visible');
     input.value = "";
