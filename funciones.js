@@ -3,8 +3,6 @@
 // ============================================================
 const track = document.querySelector('.carousel-track');
 const dotsContainer = document.querySelector('.dots');
-
-// Esperar a que el DOM esté listo para contar los eventos
 const eventos = document.querySelectorAll('.evento');
 
 eventos.forEach((_, i) => {
@@ -16,14 +14,12 @@ eventos.forEach((_, i) => {
 
 const dots = document.querySelectorAll('.dot');
 
-// Sincronizar dots al hacer scroll en el carrusel
 track.addEventListener('scroll', () => {
   const index = Math.round(track.scrollLeft / track.clientWidth);
   dots.forEach(dot => dot.classList.remove('active'));
   if (dots[index]) dots[index].classList.add('active');
 });
 
-// Hacer los dots clickeables para navegar
 dots.forEach((dot, i) => {
   dot.addEventListener('click', () => {
     track.scrollTo({ left: track.clientWidth * i, behavior: 'smooth' });
@@ -41,12 +37,11 @@ const current  = document.getElementById("current");
 const duration = document.getElementById("duration");
 const line     = document.getElementById("line");
 
-/* PLAY / PAUSE */
 function togglePlay() {
   if (audio.paused) {
     audio.play();
     btn.innerHTML = "❚❚";
-    cover.parentElement.classList.add("spin");   // gira el .vinyl, no la imagen sola
+    cover.parentElement.classList.add("spin");
   } else {
     audio.pause();
     btn.innerHTML = "▶";
@@ -54,12 +49,10 @@ function togglePlay() {
   }
 }
 
-/* DURACIÓN AL CARGAR */
 audio.addEventListener('loadedmetadata', () => {
   duration.textContent = formatTime(audio.duration);
 });
 
-/* ACTUALIZAR PROGRESO Y LETRA */
 audio.addEventListener('timeupdate', () => {
   if (!isNaN(audio.duration) && audio.duration > 0) {
     progress.value = (audio.currentTime / audio.duration) * 100;
@@ -68,14 +61,12 @@ audio.addEventListener('timeupdate', () => {
   updateLyrics(audio.currentTime);
 });
 
-/* ARRASTRAR LA BARRA DE PROGRESO */
 progress.addEventListener('input', () => {
   if (!isNaN(audio.duration)) {
     audio.currentTime = (progress.value / 100) * audio.duration;
   }
 });
 
-/* AL TERMINAR LA CANCIÓN, RESETEAR */
 audio.addEventListener('ended', () => {
   btn.innerHTML = "▶";
   cover.parentElement.classList.remove("spin");
@@ -87,7 +78,6 @@ audio.addEventListener('ended', () => {
   line.style.transform = "translateY(0)";
 });
 
-/* FORMATO mm:ss */
 function formatTime(sec) {
   if (isNaN(sec)) return "0:00";
   const m = Math.floor(sec / 60);
@@ -202,64 +192,236 @@ audio.addEventListener('play', () => {
 const inicio = new Date("2025-12-10T00:00:00");
 
 function actualizarContador() {
-  const ahora = new Date();
-  const diff  = ahora - inicio;
-  const dias  = Math.floor(diff / (1000 * 60 * 60 * 24));
+  const diff = new Date() - inicio;
+  const dias = Math.floor(diff / (1000 * 60 * 60 * 24));
   document.getElementById("contador").textContent = `Llevamos ${dias} días juntitos 💞`;
 }
+actualizarContador();
+setInterval(actualizarContador, 1000);
 
-actualizarContador();                   // mostrar de inmediato
-setInterval(actualizarContador, 1000);  // actualizar cada segundo
+// ============================================================
+// GALERÍA — LIGHTBOX
+// ============================================================
+const fotoItems   = document.querySelectorAll('.foto-item img');
+const lightbox    = document.getElementById('lightbox');
+const lbImg       = document.getElementById('lbImg');
+const lbClose     = document.getElementById('lbClose');
+const lbPrev      = document.getElementById('lbPrev');
+const lbNext      = document.getElementById('lbNext');
+let lbIndex = 0;
+
+const fotos = Array.from(fotoItems);
+
+fotos.forEach((img, i) => {
+  img.addEventListener('click', () => abrirLightbox(i));
+});
+
+function abrirLightbox(i) {
+  lbIndex = i;
+  lbImg.src = fotos[i].src;
+  lightbox.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function cerrarLightbox() {
+  lightbox.classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+lbClose.addEventListener('click', cerrarLightbox);
+
+lbPrev.addEventListener('click', () => {
+  lbIndex = (lbIndex - 1 + fotos.length) % fotos.length;
+  lbImg.src = fotos[lbIndex].src;
+});
+
+lbNext.addEventListener('click', () => {
+  lbIndex = (lbIndex + 1) % fotos.length;
+  lbImg.src = fotos[lbIndex].src;
+});
+
+lightbox.addEventListener('click', (e) => {
+  if (e.target === lightbox) cerrarLightbox();
+});
+
+document.addEventListener('keydown', (e) => {
+  if (!lightbox.classList.contains('active')) return;
+  if (e.key === 'Escape')    cerrarLightbox();
+  if (e.key === 'ArrowLeft') lbPrev.click();
+  if (e.key === 'ArrowRight') lbNext.click();
+});
+
+
 
 // ============================================================
 // CARTAS EMOCIONALES
 // ============================================================
 function mostrarCarta(tipo) {
   const textos = {
-    triste:  "Si estás triste, aquí estoy para ti siempre ❤️",
-    feliz:   "Tu felicidad también es la mía 💕",
-    extrañes: "Yo también te extraño siempre 😔💖"
+    triste:   "Amorcito mio… si estás triste, recuerda que no estás sola. Aquí estoy para ti siempre, para escucharte, para abrazarte y para recordarte que te amo muchísimo. ❤️",
+    feliz:    "Me alegra tanto que estés feliz! Tu alegría también es la mía, y me encanta verte brillar. Eres lo más bonito de mis días. 💕",
+    extrañes: "Yo también te extraño, más de lo que crees. Pero eso me recuerda lo mucho que significa lo nuestro. Pronto nos vemos 😔💖"
   };
   const el = document.getElementById("cartaTexto");
-  el.style.opacity = 0;
+  el.classList.remove('visible');
   setTimeout(() => {
     el.textContent = textos[tipo] || "";
-    el.style.opacity = 1;
+    el.classList.add('visible');
   }, 200);
 }
+
+// ============================================================
+// CARTA SECRETA CON CONTRASEÑA
+// ============================================================
+
+const CLAVE_SECRETA = "NOSOTROS";
+
+// Mensaje que verá cuando acierte
+const MENSAJE_SECRETO = `
+Correcto ❤️
+
+Porque después de todo este tiempo entendí que mi recuerdo favorito no es una foto, una cita o un día en específico.
+
+Mi recuerdo favorito siempre será:
+
+NOSOTROS.
+`;
+
+function verificarClave() {
+  const input = document.getElementById("claveInput");
+  const msg   = document.getElementById("cartaSecretaMsg");
+
+  if (input.value.trim().toLowerCase() === CLAVE_SECRETA.toLowerCase()) {
+    msg.innerHTML = MENSAJE_SECRETO.trim().replace(/\n/g, '<br>') + `
+      <br><br>
+      <video
+        id="videoNosotros"
+        src="nosotros.mp4"
+        controls
+        autoplay
+        playsinline
+        style="
+          display: block;
+          width: 100%;
+          max-width: 480px;
+          margin: 16px auto 0;
+          border-radius: 14px;
+          box-shadow: 0 6px 28px rgba(200, 100, 180, 0.45);
+        "
+      ></video>
+    `;
+    msg.classList.add('visible');
+    input.value = "";
+    lanzarCorazones(); // celebración extra
+  } else {
+    msg.innerHTML = "❌ Esa no es la clave ¡inténtalo de nuevo! 😉";
+    msg.classList.add('visible');
+    input.value = "";
+    setTimeout(() => {
+      msg.classList.remove('visible');
+    }, 2500);
+  }
+}
+
+// Permitir Enter en el input
+document.getElementById("claveInput").addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') verificarClave();
+});
 
 // ============================================================
 // BOTÓN QUE HUYE
 // ============================================================
 const noBtn = document.getElementById("no");
 
-noBtn.addEventListener('mouseover', () => {
+function escapar() {
   const maxX = window.innerWidth  - noBtn.offsetWidth  - 10;
   const maxY = window.innerHeight - noBtn.offsetHeight - 10;
   noBtn.style.position = "fixed";
   noBtn.style.left     = Math.max(0, Math.random() * maxX) + "px";
   noBtn.style.top      = Math.max(0, Math.random() * maxY) + "px";
   noBtn.style.zIndex   = "9999";
-});
+}
 
-// Para móvil: también huir al tocar
+noBtn.addEventListener('mouseover', escapar);
 noBtn.addEventListener('touchstart', (e) => {
   e.preventDefault();
-  const maxX = window.innerWidth  - noBtn.offsetWidth  - 10;
-  const maxY = window.innerHeight - noBtn.offsetHeight - 10;
-  noBtn.style.position = "fixed";
-  noBtn.style.left     = Math.max(0, Math.random() * maxX) + "px";
-  noBtn.style.top      = Math.max(0, Math.random() * maxY) + "px";
-  noBtn.style.zIndex   = "9999";
+  escapar();
 }, { passive: false });
 
 // ============================================================
-// BOTÓN SÍ
+// BOTÓN SÍ — lluvia de corazones
 // ============================================================
 const siBtn = document.getElementById("si");
 siBtn.addEventListener('click', () => {
-  alert("Yo sabía 😌💖");
+  lanzarCorazones();
 });
+
+// ============================================================
+// LLUVIA DE CORAZONES (Canvas)
+// ============================================================
+const canvas = document.getElementById("corazonesCanvas");
+const ctx    = canvas.getContext("2d");
+let particulas = [];
+let animFrameId = null;
+
+canvas.width  = window.innerWidth;
+canvas.height = window.innerHeight;
+
+window.addEventListener('resize', () => {
+  canvas.width  = window.innerWidth;
+  canvas.height = window.innerHeight;
+});
+
+class Corazon {
+  constructor() { this.reset(); }
+  reset() {
+    this.x     = Math.random() * canvas.width;
+    this.y     = canvas.height + 20;
+    this.size  = 14 + Math.random() * 22;
+    this.speed = 2 + Math.random() * 3;
+    this.drift = (Math.random() - 0.5) * 1.5;
+    this.alpha = 0.7 + Math.random() * 0.3;
+    this.color = ['#ff4d8d','#ff7eb3','#c86bff','#e040fb','#f48fb1'][Math.floor(Math.random()*5)];
+  }
+  update() {
+    this.y     -= this.speed;
+    this.x     += this.drift;
+    this.alpha -= 0.008;
+  }
+  draw() {
+    ctx.save();
+    ctx.globalAlpha = Math.max(0, this.alpha);
+    ctx.fillStyle   = this.color;
+    ctx.font        = this.size + "px serif";
+    ctx.fillText("💖", this.x, this.y);
+    ctx.restore();
+  }
+  isDead() { return this.alpha <= 0 || this.y < -30; }
+}
+
+function lanzarCorazones() {
+  // Crear 60 corazones
+  for (let i = 0; i < 60; i++) {
+    const c = new Corazon();
+    c.y = canvas.height + Math.random() * 100; // escalonados
+    particulas.push(c);
+  }
+
+  if (!animFrameId) animarCorazones();
+}
+
+function animarCorazones() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  particulas = particulas.filter(p => !p.isDead());
+  particulas.forEach(p => { p.update(); p.draw(); });
+
+  if (particulas.length > 0) {
+    animFrameId = requestAnimationFrame(animarCorazones);
+  } else {
+    animFrameId = null;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+  }
+}
 
 // ============================================================
 // SORPRESA FINAL
@@ -267,5 +429,9 @@ siBtn.addEventListener('click', () => {
 function sorpresa() {
   const msg = document.getElementById("sorpresaMensaje");
   msg.style.display = "block";
+  msg.style.animation = "none";
+  // forzar reflow para reiniciar animación
+  void msg.offsetWidth;
   msg.style.animation = "fadeIn 0.6s ease forwards";
+  lanzarCorazones();
 }
